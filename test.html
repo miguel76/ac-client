@@ -6,10 +6,12 @@ title: Test AC Client - Logged
   function submitQuery() {
     alert((new URL(document.location)).searchParams);
     alert(forms[0]['query']);
+    result.value = '{ "pippo": 5 }';
   }
 </script>
 <form>
   <input type="text" name="query"></input>
   <button onclick="submitQuery()"></button>
-  <input type="textblock" name="query"></input>
+  <!-- <textarea name="result"></textarea> -->
+  <output name="result"></output>
 </form>
