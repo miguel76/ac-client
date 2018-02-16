@@ -4,14 +4,17 @@ title: Test AC Client - Logged
 ---
 <script>
   function submitQuery() {
-    alert((new URL(document.location)).searchParams);
-    alert(forms[0]['query']);
+    console.log(document.location);
+    console.log((new URL(document.location)).searchParams);
+    console.log(forms[0]['query']);
     result.value = '{ "pippo": 5 }';
+    return false;
   }
 </script>
-<form>
+<p><a href="/">Back to Login</a><p>
+<!-- <form> -->
   <input type="text" name="query"></input>
-  <button onclick="submitQuery()"></button>
+  <button onclick="submitQuery()">Submit</button>
   <!-- <textarea name="result"></textarea> -->
   <output name="result"></output>
-</form>
+<!-- </form> -->
