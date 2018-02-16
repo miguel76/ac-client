@@ -1,0 +1,15 @@
+---
+layout: default
+title: Test AC Client - Logged
+---
+<script>
+  function submitQuery() {
+    alert((new URL(document.location)).searchParams);
+    alert(forms[0]['query']);
+  }
+</script>
+<form>
+  <input type="text" name="query"></input>
+  <button onclick="submitQuery()"></button>
+  <input type="textblock" name="query"></input>
+</form>
