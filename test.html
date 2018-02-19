@@ -5,7 +5,7 @@ title: Test AC Client - Logged
 <script>
   function submitQuery() {
     console.log(document.location);
-    const params = new URL(document.location)).searchParams);
+    const params = new URL(document.location).searchParams;
     for (var paramKey of params) {
       console.log(paramKey + ': ' + params.getAll(paramKey));
     }
