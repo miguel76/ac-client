@@ -23,7 +23,7 @@ title: Test AC Client - Logged
     console.log(params);
     console.log($('#queryForm')[0]['query'].value);
     var queryStr = $('#queryForm')[0]['query'].value;
-    result.value = '{ "pippo": 5 }';
+    $('#queryForm')[0]['result'].value = '{ "pippo": 5 }';
     jQuery.ajax(
       'https://m.audiocommons.org/api/v1/search/text/', {
         data: {
