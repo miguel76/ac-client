@@ -16,11 +16,12 @@ title: Test AC Client - Logged
     return data;
   }
 
-  function submitQuery() {
+  function submitQuery(evt) {
+    evt.preventDefault();
     console.log(document.location);
     console.log(document.location.hash);
     const hashStr = document.location.hash;
-    const params = (hashStr === '') ? {} : parseParams(hashStr.substr(1))
+    const params = (hashStr === '') ? {} : parseParams(hashStr.substr(1));
     console.log(params);
     console.log(forms[0]['query']);
     console.log($('queryForm')['query']);
@@ -31,7 +32,7 @@ title: Test AC Client - Logged
 <p><a href=".">Back to Login</a><p>
 <form id="queryForm">
   <input type="text" name="query"></input>
-  <button onclick="submitQuery()">Submit</button>
+  <button onclick="submitQuery(event);">Submit</button>
   <!-- <textarea name="result"></textarea> -->
   <output name="result"></output>
 </form>
