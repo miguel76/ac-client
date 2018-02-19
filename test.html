@@ -5,16 +5,20 @@ title: Test AC Client - Logged
 <script>
   function submitQuery() {
     console.log(document.location);
-    console.log((new URL(document.location)).searchParams);
+    const params = new URL(document.location)).searchParams);
+    for (var paramKey of params) {
+      console.log(paramKey + ': ' + params.getAll(paramKey));
+    }
     console.log(forms[0]['query']);
+    console.log($('queryForm')['query']);
     result.value = '{ "pippo": 5 }';
     return false;
   }
 </script>
 <p><a href="">Back to Login</a><p>
-<!-- <form> -->
+<form id="queryForm">
   <input type="text" name="query"></input>
   <button onclick="submitQuery()">Submit</button>
   <!-- <textarea name="result"></textarea> -->
   <output name="result"></output>
-<!-- </form> -->
+</form>
