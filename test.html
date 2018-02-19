@@ -45,8 +45,16 @@ title: Test AC Client - Logged
 </script>
 <p><a href=".">Back to Login</a><p>
 <form id="queryForm">
-  <input type="text" name="query"></input>
-  <button onclick="submitQuery(event);">Submit</button>
+  <div class="form-group">
+    <label for="queryInput">Query String</label>
+    <input type="text" class="form-control" id="queryInput" placeholder="Type some text" name="query"></input>
+  </div>
+  <div class="form-group">
+    <button onclick="submitQuery(event);">Submit</button>
+  </div>
+  <div class="form-group">
+    <label for="resultOutput">Output</label>
+    <output name="result" id="resultOutput" placeholder="Here results will show up"></output>
+  </div>
   <!-- <textarea name="result"></textarea> -->
-  <output name="result"></output>
 </form>
