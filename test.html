@@ -23,7 +23,6 @@ title: Test AC Client - Logged
     console.log(params);
     console.log($('#queryForm')[0]['query'].value);
     var queryStr = $('#queryForm')[0]['query'].value;
-    $('#queryForm')[0]['result'].value = '{ "pippo": 5 }';
     jQuery.ajax(
       'https://m.audiocommons.org/api/v1/search/text/', {
         data: {
@@ -34,9 +33,11 @@ title: Test AC Client - Logged
         },
         success: function(data, textStatus) {
           console.log(data);
+          $('#queryForm')[0]['result'].value = data;
         },
         error: function(jqXHR, textStatus) {
           console.error(textStatus);
+          $('#queryForm')[0]['result'].value = '';
         }
       });
     return false;
