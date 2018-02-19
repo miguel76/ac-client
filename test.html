@@ -18,14 +18,27 @@ title: Test AC Client - Logged
 
   function submitQuery(evt) {
     evt.preventDefault();
-    console.log(document.location);
-    console.log(document.location.hash);
-    const hashStr = document.location.hash;
-    const params = (hashStr === '') ? {} : parseParams(hashStr.substr(1));
+    var hashStr = document.location.hash;
+    var params = (hashStr === '') ? {} : parseParams(hashStr.substr(1));
     console.log(params);
-    console.log(forms[0]['query']);
-    console.log($('queryForm')['query']);
+    console.log($('#queryForm')[0]['query'].value);
+    var queryStr = $('#queryForm')[0]['query'].value;
     result.value = '{ "pippo": 5 }';
+    jQuery.ajax(
+      'https://m.audiocommons.org/api/v1/search/text/', {
+        data: {
+          q: queryStr,
+          access_token: params.access_token,
+          token_type: params.token_type,
+          scope: params.scope
+        },
+        success: function(data, textStatus) {
+          console.log(data);
+        },
+        error: function(jqXHR, textStatus) {
+          console.error(textStatus);
+        }
+      });
     return false;
   }
 </script>
