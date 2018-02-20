@@ -24,20 +24,18 @@ title: Test AC Client - Logged
     console.log($('#queryForm')[0]['query'].value);
     var queryStr = $('#queryForm')[0]['query'].value;
     jQuery.ajax(
-      'https://m.audiocommons.org/api/v1/search/text/', {
-      // 'https://localhost/api/v1/search/text/', {
+      // 'https://m.audiocommons.org/api/v1/search/text/', {
+      'https://localhost/api/v1/search/text/', {
         data: {
           q: queryStr,
-          access_token: params.access_token,
-          token_type: params.token_type
-          // scope: params.scope
+          access_token: params.access_token
         },
         headers: {
           'Authorization': 'Bearer ' + params.access_token
         },
         success: function(data, textStatus) {
           console.log(data);
-          $('#queryForm')[0]['result'].value = data;
+          $('#queryForm')[0]['result'].value = JSON.stringify(data, null, 4);
         },
         error: function(jqXHR, textStatus) {
           console.error(textStatus);
