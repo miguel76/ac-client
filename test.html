@@ -16,6 +16,27 @@ title: Test AC Client - Logged
     return data;
   }
 
+  function parse_link_header(header) {
+      if (header.length === 0) {
+          throw new Error("input must not be of zero length");
+      }
+
+      // Split parts by comma
+      var parts = header.split(',');
+      var links = {};
+      // Parse each part into a named link
+      for(var i=0; i<parts.length; i++) {
+          var section = parts[i].split(';');
+          // if (section.length !== 2) {
+          //     throw new Error("section could not be split on ';'");
+          // }
+          var url = section[0].replace(/<(.*)>/, '$1').trim();
+          var name = section[1].replace(/rel="(.*)"/, '$1').trim();
+          links[name] = url;
+      }
+      return links;
+  }
+
   function submitQuery(evt) {
     evt.preventDefault();
     var hashStr = document.location.hash;
@@ -23,7 +44,7 @@ title: Test AC Client - Logged
     console.log(params);
     console.log($('#queryForm')[0]['query'].value);
     var queryStr = $('#queryForm')[0]['query'].value;
-    jQuery.ajax(
+    $.ajax(
       // 'https://m.audiocommons.org/api/v1/search/text/', {
       'https://localhost/api/v1/search/text/', {
         data: {
@@ -33,9 +54,39 @@ title: Test AC Client - Logged
         headers: {
           'Authorization': 'Bearer ' + params.access_token
         },
-        success: function(data, textStatus) {
+        success: function(data, textStatus, request) {
           console.log(data);
+          var linkHeader = request.getResponseHeader('Link');
+          console.log(linkHeader);
+          var links = linkHeader ? parse_link_header(linkHeader) : {};
+          console.log(links);
+          var context = links['http://www.w3.org/ns/json-ld#context'];
+          if (context) {
+            console.log(context);
+          }
           $('#queryForm')[0]['result'].value = JSON.stringify(data, null, 4);
+          $.ajax(
+            // 'https://m.audiocommons.org/api/v1/search/text/', {
+            'https://localhost/api/v1/search/text/', {
+              data: {
+                q: queryStr,
+                access_token: params.access_token
+              },
+              method: 'PUT',
+              mimeType: 'application/ld+json',
+              headers: {
+                'Authorization': 'Bearer ' + params.access_token
+              },
+              success: function(data, textStatus) {
+                console.log(data);
+                $('#queryForm')[0]['result'].value = JSON.stringify(data, null, 4);
+              },
+              error: function(jqXHR, textStatus) {
+                console.error(textStatus);
+                $('#queryForm')[0]['result'].value = '';
+              }
+            });
+          // PUT /rdf-graph-store?graph=..graph_uri.. HTTP/1.1
         },
         error: function(jqXHR, textStatus) {
           console.error(textStatus);
